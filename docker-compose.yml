@@ -1,0 +1,26 @@
+version: "3"
+services:
+  arsnova-couchdb:
+    image: arsnova-couchdb
+    build: ./arsnova-couchdb
+    ports:
+      - "5984:5984"
+    volumes:
+      - "arsnova-data:/usr/local/var/lib/couchdb"
+  arsnova-webapp:
+    image: arsnova-webapp
+    build: ./arsnova-webapp
+    ports:
+      - "8080:8080"
+      - "8090:8090"
+    links:
+      - arsnova-couchdb
+  arsnova-nginx:
+    image: arsnova-nginx
+    build: ./arsnova-nginx
+    ports:
+      - "80:80"
+    links:
+      - arsnova-webapp
+volumes:
+  arsnova-data:
