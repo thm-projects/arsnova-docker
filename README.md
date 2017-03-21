@@ -11,7 +11,7 @@ Follow these steps to setup Docker for running ARSnova:
 2. Initialize Docker's swarm mode:
    `docker swarm init`
 3. Download [docker-compose.yml](docker-compose.yml)
-4. Run `docker deploy --compose-file docker-compose.yml`
+4. Run `docker deploy --compose-file docker-compose.yml arsnova`
 
 That's it. You should now be able to access ARSnova at http://localhost.
 
