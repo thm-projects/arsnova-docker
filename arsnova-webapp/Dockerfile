@@ -34,6 +34,7 @@ RUN \
   curl -SLO "$ARSNOVA_CONFIG_URL" && \
   mkdir /etc/arsnova && \
   sed 's/^couchdb.host=.*/couchdb.host=couchdb/g' arsnova.properties.example > /etc/arsnova/arsnova.properties && \
+  sed '/^#socketio.proxy-path=/s/^#//g' arsnova.properties.example > /etc/arsnova/arsnova.properties && \
   rm arsnova.properties.example
 
 RUN \
