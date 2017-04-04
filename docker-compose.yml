@@ -24,3 +24,4 @@ services:
       - webapp
 volumes:
   data:
+env_file: arsnova.env
