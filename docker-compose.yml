@@ -15,6 +15,7 @@ services:
       - "8090:8090"
     links:
       - couchdb
+    env_file: webapp.env
   nginx:
     image: arsnova/arsnova-nginx
     build: ./arsnova-nginx
@@ -24,4 +25,3 @@ services:
       - webapp
 volumes:
   data:
-env_file: arsnova.env
