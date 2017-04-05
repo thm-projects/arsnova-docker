@@ -35,6 +35,7 @@ RUN \
   mkdir /etc/arsnova && \
   sed \
     -e 's/^couchdb.host=.*/couchdb.host=couchdb/g' \
+    -e 's/^socketio.bind-address=.*/socketio.bind-address=0.0.0.0/g' \
     -e '/^#socketio.proxy-path=/s/^#//g' \
     arsnova.properties.example > /etc/arsnova/arsnova.properties && \
   rm arsnova.properties.example
