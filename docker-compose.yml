@@ -1,14 +1,14 @@
 version: "3.4"
 services:
   couchdb:
-    image: arsnova/arsnova-couchdb
+    image: arsnova/arsnova-couchdb:2.5
     build: ./arsnova-couchdb
     ports:
       - "5984:5984"
     volumes:
       - "data:/usr/local/var/lib/couchdb"
   webapp:
-    image: arsnova/arsnova-webapp
+    image: arsnova/arsnova-webapp:2.5
     build: ./arsnova-webapp
     ports:
       - "8080:8080"
@@ -17,7 +17,7 @@ services:
       - couchdb
     env_file: webapp.env
   nginx:
-    image: arsnova/arsnova-nginx
+    image: arsnova/arsnova-nginx:2.5
     build: ./arsnova-nginx
     ports:
       - "80:80"
