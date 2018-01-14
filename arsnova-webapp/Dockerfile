@@ -18,9 +18,12 @@ EXPOSE 8080
 EXPOSE 8090
 
 RUN apt-get update && \
-  apt-get install -y --no-install-recommends -t jessie-backports libservlet3.1-java nginx tomcat8 && \
   apt-get install -y --no-install-recommends \
-    python && \
+    libservlet3.1-java \
+    nginx \
+    python \
+    tomcat8 \
+  && \
   apt-get clean && \
   rm -rf /var/lib/apt/lists/*
 
