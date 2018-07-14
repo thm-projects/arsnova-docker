@@ -72,7 +72,7 @@ RUN \
 RUN \
   curl -SLO "$ARSNOVA_SETUPTOOL_URL" && \
   tar xzf "$ARSNOVA_SETUPTOOL_ARCHIVE" && \
-  rm -rf "$ARSNOVA_SETIPTOOL_ARCHIVE"
+  rm -rf "$ARSNOVA_SETUPTOOL_ARCHIVE"
 
 COPY docker-entrypoint.sh /
 
