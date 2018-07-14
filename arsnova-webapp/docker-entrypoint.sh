@@ -14,8 +14,13 @@ if [ "$1" = run ]; then
     sleep 10;
   done
   cd /arsnova-setuptool-"$ARSNOVA_SETUPTOOL_VERSION" && python tool.py
-  sed -i "s@^root-url=.*@root-url=$ROOT_URL@g" /etc/arsnova/arsnova.properties
 fi
+
+# Compatibility with old configurations
+if [ ! -z "$ROOT_URL" ]; then
+  ARSNOVA_ROOT_URL=$ROOT_URL
+fi
+
 export CATALINA_HOME=/usr/share/tomcat8
 export CATALINA_BASE=/var/lib/tomcat8
 $CATALINA_HOME/bin/catalina.sh "$@"
