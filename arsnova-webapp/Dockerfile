@@ -35,13 +35,13 @@ RUN apt-get update && \
   rm -rf /var/lib/apt/lists/*
 
 RUN \
-  curl -SLO "$ARSNOVA_BACKEND_URL" && \
-  curl -SLO "$ARSNOVA_MOBILE_URL" && \
+  curl -fsSLO "$ARSNOVA_BACKEND_URL" && \
+  curl -fsSLO "$ARSNOVA_MOBILE_URL" && \
   mv "$ARSNOVA_BACKEND_ARCHIVE" /var/lib/tomcat8/webapps/api.war && \
   mv "$ARSNOVA_MOBILE_ARCHIVE" /var/lib/tomcat8/webapps/mobile.war
 
 RUN \
-  curl -SLO "$ARSNOVA_CONFIG_URL" && \
+  curl -fsSLO "$ARSNOVA_CONFIG_URL" && \
   mkdir /etc/arsnova && \
   sed \
     # Remove escaped line breaks
@@ -71,7 +71,7 @@ RUN \
   sed -i "s#</Host>#  $TOMCAT_VALVE\n\n      </Host>#g" /etc/tomcat8/server.xml
 
 RUN \
-  curl -SLO "$ARSNOVA_SETUPTOOL_URL" && \
+  curl -fsSLO "$ARSNOVA_SETUPTOOL_URL" && \
   tar xzf "$ARSNOVA_SETUPTOOL_ARCHIVE" && \
   rm -rf "$ARSNOVA_SETUPTOOL_ARCHIVE"
 
