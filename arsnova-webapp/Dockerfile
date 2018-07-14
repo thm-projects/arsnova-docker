@@ -26,6 +26,7 @@ RUN apt-get update && \
   apt-get install -y --no-install-recommends \
     gawk \
     libservlet3.1-java \
+    libtcnative-1 \
     nginx \
     python \
     tomcat8 \
