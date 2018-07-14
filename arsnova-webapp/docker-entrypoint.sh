@@ -13,7 +13,7 @@ if [ "$1" = run ]; then
     fi
     sleep 10;
   done
-  cd /arsnova-setuptool-"$ARSNOVA_SETUPTOOL_VERSION" && python tool.py
+  python /opt/arsnova/setuptool/tool.py
 fi
 
 # Compatibility with old configurations

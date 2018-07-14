@@ -38,10 +38,12 @@ RUN apt-get update && \
   rm -rf /var/lib/apt/lists/*
 
 RUN \
+  mkdir -p /opt/arsnova && \
+  cd /opt/arsnova && \
   curl -fsSLO "$ARSNOVA_BACKEND_URL" && \
   curl -fsSLO "$ARSNOVA_MOBILE_URL" && \
-  mv "$ARSNOVA_BACKEND_ARCHIVE" /var/lib/tomcat8/webapps/api.war && \
-  mv "$ARSNOVA_MOBILE_ARCHIVE" /var/lib/tomcat8/webapps/mobile.war
+  ln -s `pwd`/"$ARSNOVA_BACKEND_ARCHIVE" /var/lib/tomcat8/webapps/api.war && \
+  ln -s `pwd`/"$ARSNOVA_MOBILE_ARCHIVE" /var/lib/tomcat8/webapps/mobile.war
 
 RUN \
   curl -fsSLO "$ARSNOVA_CONFIG_URL" && \
@@ -72,17 +74,19 @@ RUN \
     > /etc/arsnova/arsnova.properties && \
   rm arsnova.properties.example && \
   sed -i "s#</Host>#  $TOMCAT_VALVE\n\n      </Host>#g" /etc/tomcat8/server.xml && \
-  printf '<?xml version="1.0" encoding="UTF-8"?>\n<Context docBase="/arsnova-customization" path="/customization"/>' > /etc/tomcat8/Catalina/localhost/customization.xml
+  printf '<?xml version="1.0" encoding="UTF-8"?>\n<Context docBase="/opt/arsnova/customization" path="/customization"/>\n' > /etc/tomcat8/Catalina/localhost/customization.xml
 
 RUN \
+  mkdir -p /opt/arsnova && \
+  cd /opt/arsnova && \
+  mkdir setuptool && \
   curl -fsSLO "$ARSNOVA_SETUPTOOL_URL" && \
-  tar xzf "$ARSNOVA_SETUPTOOL_ARCHIVE" && \
+  tar xzf "$ARSNOVA_SETUPTOOL_ARCHIVE" -C setuptool --strip-components 1 && \
   rm -rf "$ARSNOVA_SETUPTOOL_ARCHIVE" && \
+  mkdir customization && \
   curl -fsSLO "$ARSNOVA_CUSTOMIZATION_URL" && \
-  tar xzf "$ARSNOVA_CUSTOMIZATION_ARCHIVE" && \
-  rm -rf "$ARSNOVA_CUSTOMIZATION_ARCHIVE" && \
-  mv "arsnova-customization-$ARSNOVA_CUSTOMIZATION_VERSION/src/main/webapp" arsnova-customization && \
-  rm -rf "arsnova-customization-$ARSNOVA_CUSTOMIZATION_VERSION"
+  tar xzf "$ARSNOVA_CUSTOMIZATION_ARCHIVE" -C customization --strip-components 4 "arsnova-customization-$ARSNOVA_CUSTOMIZATION_VERSION/src/main/webapp" && \
+  rm -rf "$ARSNOVA_CUSTOMIZATION_ARCHIVE"
 
 COPY docker-entrypoint.sh /
 
