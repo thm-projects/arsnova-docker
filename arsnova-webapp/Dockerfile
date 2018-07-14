@@ -4,12 +4,15 @@ LABEL maintainer "Daniel Gerhardt <code@z.dgerhardt.net>"
 ENV ARSNOVA_BACKEND_VERSION 2.5.0
 ENV ARSNOVA_MOBILE_VERSION 2.5.0
 ENV ARSNOVA_SETUPTOOL_VERSION 2.5.0
+ENV ARSNOVA_CUSTOMIZATION_VERSION master
 ENV ARSNOVA_BACKEND_ARCHIVE arsnova-backend-$ARSNOVA_BACKEND_VERSION.war
 ENV ARSNOVA_BACKEND_URL https://github.com/thm-projects/arsnova-backend/releases/download/v$ARSNOVA_BACKEND_VERSION/$ARSNOVA_BACKEND_ARCHIVE
 ENV ARSNOVA_MOBILE_ARCHIVE arsnova-mobile-$ARSNOVA_MOBILE_VERSION.war
 ENV ARSNOVA_MOBILE_URL https://github.com/thm-projects/arsnova-mobile/releases/download/v$ARSNOVA_MOBILE_VERSION/$ARSNOVA_MOBILE_ARCHIVE
 ENV ARSNOVA_SETUPTOOL_ARCHIVE v$ARSNOVA_SETUPTOOL_VERSION.tar.gz
 ENV ARSNOVA_SETUPTOOL_URL https://github.com/thm-projects/arsnova-setuptool/archive/$ARSNOVA_SETUPTOOL_ARCHIVE
+ENV ARSNOVA_CUSTOMIZATION_ARCHIVE $ARSNOVA_CUSTOMIZATION_VERSION.tar.gz
+ENV ARSNOVA_CUSTOMIZATION_URL https://github.com/thm-projects/arsnova-customization/archive/$ARSNOVA_CUSTOMIZATION_ARCHIVE
 ENV ARSNOVA_CONFIG_URL https://raw.githubusercontent.com/thm-projects/arsnova-backend/v$ARSNOVA_BACKEND_VERSION/src/main/resources/arsnova.properties.example
 
 ARG TOMCAT_VALVE='<Valve\
@@ -68,12 +71,18 @@ RUN \
     }' \
     > /etc/arsnova/arsnova.properties && \
   rm arsnova.properties.example && \
-  sed -i "s#</Host>#  $TOMCAT_VALVE\n\n      </Host>#g" /etc/tomcat8/server.xml
+  sed -i "s#</Host>#  $TOMCAT_VALVE\n\n      </Host>#g" /etc/tomcat8/server.xml && \
+  printf '<?xml version="1.0" encoding="UTF-8"?>\n<Context docBase="/arsnova-customization" path="/customization"/>' > /etc/tomcat8/Catalina/localhost/customization.xml
 
 RUN \
   curl -fsSLO "$ARSNOVA_SETUPTOOL_URL" && \
   tar xzf "$ARSNOVA_SETUPTOOL_ARCHIVE" && \
-  rm -rf "$ARSNOVA_SETUPTOOL_ARCHIVE"
+  rm -rf "$ARSNOVA_SETUPTOOL_ARCHIVE" && \
+  curl -fsSLO "$ARSNOVA_CUSTOMIZATION_URL" && \
+  tar xzf "$ARSNOVA_CUSTOMIZATION_ARCHIVE" && \
+  rm -rf "$ARSNOVA_CUSTOMIZATION_ARCHIVE" && \
+  mv "arsnova-customization-$ARSNOVA_CUSTOMIZATION_VERSION/src/main/webapp" arsnova-customization && \
+  rm -rf "arsnova-customization-$ARSNOVA_CUSTOMIZATION_VERSION"
 
 COPY docker-entrypoint.sh /
 
