@@ -7,14 +7,11 @@ Pre-built ARSnova images are available at [Docker Hub](https://hub.docker.com/u/
 
 Follow these steps to setup Docker for running ARSnova:
 
-1. Make sure that Docker is installed
-2. As of Docker 1.13
-   [experimental features](https://github.com/docker/docker/tree/1.13.x/experimental#use-docker-experimental)
-   need to be enabled for the support of stacks
-3. Initialize Docker's swarm mode:
+1. Make sure that Docker is installed and up to date.
+2. Initialize Docker's swarm mode:
    `docker swarm init`
-4. Download [docker-compose.yml](docker-compose.yml) and [webapp.env](webapp.env) to a new directory
-5. Run `docker deploy --compose-file docker-compose.yml arsnova` in the previously created directory
+3. Download [docker-compose.yml](docker-compose.yml) and [webapp.env](webapp.env) to a new directory.
+4. Run `docker stack deploy -c docker-compose.yml arsnova` in the previously created directory.
 
 That's it. You should now be able to access ARSnova at http://localhost.
 You can change configuration settings in webapp.env.
@@ -23,9 +20,9 @@ You can change configuration settings in webapp.env.
 
 Follow these steps to build Docker images for ARSnova:
 
-1. Make sure that Docker and Docker Compose are installed
-2. Clone this repository and `cd` into it
-3. Run `docker-compose build`
+1. Make sure that Docker and Docker Compose are installed and up to date.
+2. Clone this repository and `cd` into it.
+3. Run `docker-compose build`.
 
 You can now run `docker-compose start` and test the images.
 ARSnova should be running at http://localhost.
