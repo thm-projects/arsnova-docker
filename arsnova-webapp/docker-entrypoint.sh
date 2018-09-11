@@ -30,6 +30,7 @@ if [ "$1" = run ]; then
     fi
     sleep 10;
   done
+  cd /opt/arsnova/setuptool
   python /opt/arsnova/setuptool/tool.py
 fi
 
