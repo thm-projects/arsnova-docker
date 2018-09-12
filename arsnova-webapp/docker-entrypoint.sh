@@ -1,4 +1,21 @@
 #!/bin/sh
+# Override config values from environment specified by the user
+gawk '{
+      match($0, /^(# ?)?([a-z0-9._-]+)( *= *)(.*)$/, a);
+      if (RLENGTH != -1) {
+        param = "ARSNOVA_" toupper(gensub(/[.-]/, "_", "g", a[2]));
+        if ( param in ENVIRON) {
+          out = a[2] a[3] ENVIRON[param];
+        } else {
+          out = $0;
+        }
+      } else {
+        out = $0;
+      }
+      print out;
+    }' </etc/arsnova/arsnova.properties >/tmp/arsnova.properties
+/bin/mv /tmp/arsnova.properties /etc/arsnova/arsnova.properties
+
 if [ "$1" = run ]; then
   printf "Testing database connection"
   for i in `seq 1 10`; do
@@ -13,6 +30,7 @@ if [ "$1" = run ]; then
     fi
     sleep 10;
   done
+  cd /opt/arsnova/setuptool
   python /opt/arsnova/setuptool/tool.py
 fi
 

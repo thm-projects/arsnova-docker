@@ -57,20 +57,7 @@ RUN \
     -e 's/^\(couchdb.host *= *\).*/\1couchdb/g' \
     -e 's/^\(socketio.bind-address *= *\).*/\10.0.0.0/g' \
     -e '/^#socketio.proxy-path *=/s/^#//g' \
-    -e 's/^#\(session.guest-session.cleanup-days *= *\).*/\10/g' | \
-    # Add environment variable support to properies file
-    gawk '{ \
-      match($0, /^(# ?)?([a-z0-9._-]+)( *= *)(.*)$/, a); \
-      if (RLENGTH != -1) { \
-        b = gensub(/[.-]/, "_", "g", a[2]); \
-        defaultVal = ""; \
-        if (!a[1]) defaultVal = a[4]; \
-        out = a[2] a[3] "${ARSNOVA_" toupper(b) ":" defaultVal "}"; \
-      } else { \
-        out = $0; \
-      } \
-      print out; \
-    }' \
+    -e 's/^#\(session.guest-session.cleanup-days *= *\).*/\10/g' \
     > /etc/arsnova/arsnova.properties && \
   rm arsnova.properties.example && \
   sed -i "s#</Host>#  $TOMCAT_VALVE\n\n      </Host>#g" /etc/tomcat8/server.xml && \
