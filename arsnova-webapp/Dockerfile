@@ -15,6 +15,12 @@ ENV ARSNOVA_CUSTOMIZATION_ARCHIVE $ARSNOVA_CUSTOMIZATION_VERSION.tar.gz
 ENV ARSNOVA_CUSTOMIZATION_URL https://github.com/thm-projects/arsnova-customization/archive/$ARSNOVA_CUSTOMIZATION_ARCHIVE
 ENV ARSNOVA_CONFIG_URL https://raw.githubusercontent.com/thm-projects/arsnova-backend/v$ARSNOVA_BACKEND_VERSION/src/main/resources/arsnova.properties.example
 
+ENV ARSNOVA_COUCHDB_HOST couchdb
+ENV ARSNOVA_COUCHDB_PORT 5984
+ENV ARSNOVA_COUCHDB_NAME arsnova
+ENV ARSNOVA_COUCHDB_USERNAME admin
+ENV ARSNOVA_COUCHDB_PASSWORD ""
+
 ARG TOMCAT_VALVE='<Valve\
  className="org.apache.catalina.valves.RemoteIpValve"\
  remoteIpHeader="x-forwarded-for"\
@@ -54,7 +60,6 @@ RUN \
     arsnova.properties.example | \
     # Adjust defaults for Docker vnet
     sed \
-    -e 's/^\(couchdb.host *= *\).*/\1couchdb/g' \
     -e 's/^\(socketio.bind-address *= *\).*/\10.0.0.0/g' \
     -e '/^#socketio.proxy-path *=/s/^#//g' \
     -e 's/^#\(session.guest-session.cleanup-days *= *\).*/\10/g' | \
