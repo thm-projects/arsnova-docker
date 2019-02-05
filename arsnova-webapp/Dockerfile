@@ -62,7 +62,8 @@ RUN \
     sed \
     -e 's/^\(socketio.bind-address *= *\).*/\10.0.0.0/g' \
     -e '/^#socketio.proxy-path *=/s/^#//g' \
-    -e 's/^#\(session.guest-session.cleanup-days *= *\).*/\10/g' | \
+    -e 's/^#\(session.guest-session.cleanup-days *= *\).*/\10/g' \
+    -e 's/^#\(user.cleanup-days *= *\).*/\10/g' | \
     # Add environment variable support to properies file
     gawk '{ \
       match($0, /^(# ?)?([a-z0-9._-]+)( *= *)(.*)$/, a); \
