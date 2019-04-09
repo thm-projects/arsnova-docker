@@ -1,5 +1,5 @@
 FROM nginx
-LABEL maintainer "Daniel Gerhardt <code@z.dgerhardt.net>"
+LABEL maintainer "Daniel Gerhardt <code@dgerhardt.net>"
 
 RUN \
   apt-get update && \

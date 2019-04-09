@@ -1,5 +1,5 @@
 FROM openjdk:8-jre
-LABEL maintainer "Daniel Gerhardt <code@z.dgerhardt.net>"
+LABEL maintainer "Daniel Gerhardt <code@dgerhardt.net>"
 
 ENV ARSNOVA_BACKEND_VERSION 2.5.0
 ENV ARSNOVA_MOBILE_VERSION 2.5.0
