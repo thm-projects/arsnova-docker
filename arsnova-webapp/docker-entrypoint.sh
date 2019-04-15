@@ -23,4 +23,4 @@ fi
 
 export CATALINA_HOME=/usr/share/tomcat8
 export CATALINA_BASE=/var/lib/tomcat8
-$CATALINA_HOME/bin/catalina.sh "$@"
+exec $CATALINA_HOME/bin/catalina.sh "$@"

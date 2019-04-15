@@ -13,6 +13,6 @@ if [ -z "$1" ]; then
     fi
     sleep 10;
   done
-  nginx -g "daemon off;"
+  exec nginx -g "daemon off;"
 fi
-"$@";
+exec "$@";
