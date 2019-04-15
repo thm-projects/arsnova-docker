@@ -36,7 +36,6 @@ RUN apt-get update && \
     gawk \
     libservlet3.1-java \
     libtcnative-1 \
-    nginx \
     python \
     tomcat8 \
   && \
