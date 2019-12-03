@@ -94,6 +94,8 @@ RUN \
   rm -rf "$ARSNOVA_CUSTOMIZATION_ARCHIVE"
 
 COPY docker-entrypoint.sh /
+COPY docker-healthcheck.sh /
 
+HEALTHCHECK --interval=12s --timeout=9s --start-period=30s CMD /docker-healthcheck.sh
 ENTRYPOINT ["/docker-entrypoint.sh"]
 CMD ["run"]
