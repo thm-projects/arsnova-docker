@@ -37,10 +37,14 @@ RUN apt-get update && \
     libservlet3.1-java \
     libtcnative-1 \
     python \
-    tomcat8 \
   && \
   apt-get clean && \
   rm -rf /var/lib/apt/lists/*
+
+RUN echo "deb http://deb.debian.org/debian stretch-backports main" >> /etc/apt/sources.list
+
+RUN apt-get update && \
+  apt-get install -y --no-install-recommends -t stretch-backports tomcat8
 
 RUN \
   mkdir -p /opt/arsnova && \
