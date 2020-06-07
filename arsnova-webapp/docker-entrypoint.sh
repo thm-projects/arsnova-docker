@@ -21,6 +21,6 @@ if [ ! -z "$ROOT_URL" ]; then
   ARSNOVA_ROOT_URL=$ROOT_URL
 fi
 
-export CATALINA_HOME=/usr/share/tomcat8
-export CATALINA_BASE=/var/lib/tomcat8
+export CATALINA_HOME=/usr/share/tomcat9
+export CATALINA_BASE=/var/lib/tomcat9
 exec $CATALINA_HOME/bin/catalina.sh "$@"

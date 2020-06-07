@@ -37,7 +37,7 @@ RUN apt-get update && \
     libservlet3.1-java \
     libtcnative-1 \
     python \
-    tomcat8 \
+    tomcat9 \
   && \
   apt-get clean && \
   rm -rf /var/lib/apt/lists/*
@@ -47,10 +47,11 @@ RUN \
   cd /opt/arsnova && \
   curl -fsSLO "$ARSNOVA_BACKEND_URL" && \
   curl -fsSLO "$ARSNOVA_MOBILE_URL" && \
-  ln -s `pwd`/"$ARSNOVA_BACKEND_ARCHIVE" /var/lib/tomcat8/webapps/api.war && \
-  ln -s `pwd`/"$ARSNOVA_MOBILE_ARCHIVE" /var/lib/tomcat8/webapps/mobile.war
+  ln -s `pwd`/"$ARSNOVA_BACKEND_ARCHIVE" /var/lib/tomcat9/webapps/api.war && \
+  ln -s `pwd`/"$ARSNOVA_MOBILE_ARCHIVE" /var/lib/tomcat9/webapps/mobile.war
 
 RUN \
+  mkdir /etc/tomcat9/Catalina/localhost && \
   curl -fsSLO "$ARSNOVA_CONFIG_URL" && \
   mkdir /etc/arsnova && \
   sed \
@@ -78,8 +79,8 @@ RUN \
     }' \
     > /etc/arsnova/arsnova.properties && \
   rm arsnova.properties.example && \
-  sed -i "s#</Host>#  $TOMCAT_VALVE\n\n      </Host>#g" /etc/tomcat8/server.xml && \
-  printf '<?xml version="1.0" encoding="UTF-8"?>\n<Context docBase="/opt/arsnova/customization" path="/customization"/>\n' > /etc/tomcat8/Catalina/localhost/customization.xml
+  sed -i "s#</Host>#  $TOMCAT_VALVE\n\n      </Host>#g" /etc/tomcat9/server.xml && \
+  printf '<?xml version="1.0" encoding="UTF-8"?>\n<Context docBase="/opt/arsnova/customization" path="/customization"/>\n' > /etc/tomcat9/Catalina/localhost/customization.xml
 
 RUN \
   mkdir -p /opt/arsnova && \
