@@ -3,7 +3,12 @@
 This repository contains configuration files for the creation of Docker images for the ARSnova Audience Response System.
 Pre-built ARSnova images are available at [Docker Hub](https://hub.docker.com/u/arsnova/).
 
-## Running ARSnova on Docker
+The information in this repository applies to ARSnova version 2 which is no longer under active development.
+ARSnova 2 is still maintained meaning it receives security and other important bug fixes but you should not expect any new features.
+Head over to our [main repository](https://gitlab.com/particify/dev/foss/arsnova) for information regarding ARSnova 3.
+
+
+## Running ARSnova 2 on Docker
 
 Follow these steps to setup Docker for running ARSnova:
 
